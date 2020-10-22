@@ -17,5 +17,6 @@
         <module name="org.hibernate"/>
         <module name="org.javassist"/>
         <module name="org.liquibase"/>
+        <module name="org.jboss.logging"/>
     </dependencies>
 </module>

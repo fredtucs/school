@@ -41,6 +41,13 @@ public class RoomsServiceImpl implements RoomsService, Converters {
 	}
 
 	@Override
+	public List<School> findAllSchools() {
+		List<SchoolEntity> roomEntities = getEntityManager().createNamedQuery("findAllSchools", SchoolEntity.class)
+				.getResultList();
+		return roomEntities.stream().map(t -> SchoolEntityToSchool.apply(t)).collect(toList());
+	}
+
+	@Override
 	public List<Room> findAllRooms() {
 		List<RoomEntity> roomEntities = getEntityManager().createNamedQuery("findAllRooms", RoomEntity.class)
 				.getResultList();

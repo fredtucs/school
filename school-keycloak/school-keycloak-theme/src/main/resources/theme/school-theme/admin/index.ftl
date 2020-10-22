@@ -16,6 +16,7 @@
     </#if>
 
     <script type="text/javascript">
+        var authServerUrl = '${authServerUrl}';
         var authUrl = '${authUrl}';
         var consoleBaseUrl = '${consoleBaseUrl}';
         var resourceUrl = '${resourceUrl}';
@@ -62,9 +63,11 @@
     <script src="${authUrl}/js/keycloak.js?version=${resourceVersion}" type="text/javascript"></script>
 
     <script src="${resourceUrl}/js/app.js" type="text/javascript"></script>
+    <script src="${resourceUrl}/js/school-config.js" type="text/javascript"></script>
     <script src="${resourceUrl}/js/controllers/realm.js" type="text/javascript"></script>
     <script src="${resourceUrl}/js/controllers/clients.js" type="text/javascript"></script>
     <script src="${resourceUrl}/js/controllers/users.js" type="text/javascript"></script>
+    <script src="${resourceUrl}/js/controllers/users-extended.js" type="text/javascript"></script>
     <script src="${resourceUrl}/js/controllers/rooms.js" type="text/javascript"></script>
     <script src="${resourceUrl}/js/controllers/groups.js" type="text/javascript"></script>
     <script src="${resourceUrl}/js/controllers/roles.js" type="text/javascript"></script>

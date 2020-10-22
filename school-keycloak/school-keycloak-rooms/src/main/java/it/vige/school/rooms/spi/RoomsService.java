@@ -9,6 +9,8 @@ import it.vige.school.rooms.School;
 
 public interface RoomsService extends Provider {
 
+	List<School> findAllSchools();
+
 	List<Room> findAllRooms();
 
 	List<School> findSchools(String search, Integer firstResult, Integer maxResults, Boolean briefRepresentation);

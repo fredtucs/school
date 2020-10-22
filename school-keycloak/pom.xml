@@ -263,6 +263,7 @@
 								<server-arg>-Dkeycloak.migration.provider=dir</server-arg>
 								<server-arg>-Dkeycloak.migration.dir=${project.build.directory}/keycloak-run/wildfly-${wildfly.version}/realm-config/execution</server-arg>
 								<server-arg>-Dkeycloak.migration.strategy=${realm.migration}</server-arg>
+								<server-arg>-Dkeycloak.profile.feature.upload_scripts=enabled</server-arg>
 							</server-args>
 						</configuration>
 						<executions>

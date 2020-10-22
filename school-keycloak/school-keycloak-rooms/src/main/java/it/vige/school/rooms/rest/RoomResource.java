@@ -1,34 +1,26 @@
 package it.vige.school.rooms.rest;
 
-import static it.vige.school.rooms.rest.RoomsRestResource.checkRealmAdmin;
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-
-import java.util.List;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
-
-import org.jboss.resteasy.annotations.cache.NoCache;
-import org.keycloak.models.KeycloakSession;
-import org.keycloak.services.managers.AuthenticationManager.AuthResult;
-
+import it.vige.school.Constants;
 import it.vige.school.rooms.Room;
 import it.vige.school.rooms.spi.RoomsService;
+import org.jboss.resteasy.annotations.cache.NoCache;
+import org.keycloak.models.KeycloakSession;
+
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
+import java.util.List;
+
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class RoomResource {
 
 	private final KeycloakSession session;
-	private final AuthResult auth;
 
-	public RoomResource(KeycloakSession session, AuthResult auth) {
+
+	@Inject
+	public RoomResource(KeycloakSession session) {
 		this.session = session;
-		this.auth = auth;
 	}
 
 	@GET
@@ -36,6 +28,7 @@ public class RoomResource {
 	@NoCache
 	@Produces(APPLICATION_JSON)
 	public List<Room> findAllRooms() {
+		AuthCheck.whoAmI(session);
 		return session.getProvider(RoomsService.class).findAllRooms();
 	}
 
@@ -44,6 +37,7 @@ public class RoomResource {
 	@Path("{school}")
 	@Produces(APPLICATION_JSON)
 	public List<Room> findRoomsBySchool(@PathParam("school") final String school) {
+		AuthCheck.whoAmI(session);
 		return session.getProvider(RoomsService.class).findRoomsBySchool(school);
 	}
 
@@ -53,7 +47,7 @@ public class RoomResource {
 	@Consumes(APPLICATION_JSON)
 	@Produces(APPLICATION_JSON)
 	public Room createRoom(Room room) {
-		checkRealmAdmin(auth);
+		AuthCheck.hasRole(session, Constants.ADMIN_ROLE);
 		return session.getProvider(RoomsService.class).createRoom(room);
 	}
 
@@ -62,7 +56,7 @@ public class RoomResource {
 	@NoCache
 	@Consumes(APPLICATION_JSON)
 	public Response removeRoom(Room room) {
-		checkRealmAdmin(auth);
+		AuthCheck.hasRole(session, Constants.ADMIN_ROLE);
 		session.getProvider(RoomsService.class).removeRoom(room);
 		return Response.created(session.getContext().getUri().getAbsolutePathBuilder()
 				.path(room.getClazz() + "-" + room.getSection() + "-" + room.getSchool()).build()).build();

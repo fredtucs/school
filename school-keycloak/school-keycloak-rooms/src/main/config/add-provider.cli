@@ -1,2 +1,6 @@
 embed-server --server-config=standalone.xml
 /subsystem=keycloak-server:write-attribute(name=providers,value=[classpath:${jboss.home.dir}/providers/*, module:it.vige.school.rooms])
+/subsystem=logging/logger=it.vige.school.rooms:add
+/subsystem=logging/logger=it.vige.school.rooms:write-attribute(name=level, value=DEBUG)
+/subsystem=logging/logger=org.keycloak:add
+/subsystem=logging/logger=org.keycloak:write-attribute(name=level, value=ERROR)

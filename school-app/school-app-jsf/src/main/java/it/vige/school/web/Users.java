@@ -1,19 +1,12 @@
 package it.vige.school.web;
 
-import static it.vige.school.Constants.ERROR;
-import static it.vige.school.Constants.MAX_USERS;
-import static it.vige.school.Utils.getCalendarByDate;
-import static java.util.stream.Collectors.toList;
-import static javax.faces.application.FacesMessage.SEVERITY_INFO;
-import static javax.faces.context.FacesContext.getCurrentInstance;
-import static org.jboss.logging.Logger.getLogger;
-
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import it.vige.school.ModuleException;
+import it.vige.school.RestCaller;
+import it.vige.school.SchoolModule;
+import it.vige.school.dto.Presence;
+import it.vige.school.dto.User;
+import org.jboss.logging.Logger;
+import org.keycloak.representations.idm.UserRepresentation;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -23,15 +16,20 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import org.jboss.logging.Logger;
-import org.keycloak.representations.idm.UserRepresentation;
-
-import it.vige.school.ModuleException;
-import it.vige.school.RestCaller;
-import it.vige.school.SchoolModule;
-import it.vige.school.dto.Presence;
-import it.vige.school.dto.User;
+import static it.vige.school.Constants.ERROR;
+import static it.vige.school.Constants.MAX_USERS;
+import static it.vige.school.Utils.getCalendarByDate;
+import static java.util.stream.Collectors.toList;
+import static javax.faces.application.FacesMessage.SEVERITY_INFO;
+import static javax.faces.context.FacesContext.getCurrentInstance;
+import static org.jboss.logging.Logger.getLogger;
 
 @SessionScoped
 @Named

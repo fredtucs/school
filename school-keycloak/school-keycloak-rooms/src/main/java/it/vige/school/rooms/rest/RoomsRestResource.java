@@ -1,42 +1,27 @@
 package it.vige.school.rooms.rest;
 
-import static it.vige.school.Constants.ADMIN_ROLE;
-
-import javax.ws.rs.ForbiddenException;
-import javax.ws.rs.NotAuthorizedException;
-import javax.ws.rs.Path;
-
 import org.keycloak.models.KeycloakSession;
-import org.keycloak.services.managers.AppAuthManager;
-import org.keycloak.services.managers.AuthenticationManager.AuthResult;
+
+import javax.inject.Inject;
+import javax.ws.rs.Path;
 
 public class RoomsRestResource {
 
-	private final KeycloakSession session;
-	private final AuthResult auth;
+    private final KeycloakSession session;
 
-	public RoomsRestResource(KeycloakSession session) {
-		this.session = session;
-		this.auth = new AppAuthManager().authenticateBearerToken(session, session.getContext().getRealm());
-	}
+    @Inject
+    public RoomsRestResource(KeycloakSession session) {
+        this.session = session;
+    }
 
-	@Path("rooms")
-	public RoomResource getRoomResource() {
-		return new RoomResource(session, auth);
-	}
+    @Path("rooms")
+    public RoomResource getRoomResource() {
+        return new RoomResource(session);
+    }
 
-	@Path("schools")
-	public SchoolResource getSchoolResource() {
-		return new SchoolResource(session, auth);
-	}
-
-	public static void checkRealmAdmin(AuthResult auth) {
-		if (auth == null) {
-			throw new NotAuthorizedException("Bearer");
-		} else if (auth.getUser().getGroups() == null
-				|| auth.getUser().getGroups().stream().filter(x -> x.getName().equals(ADMIN_ROLE)).count() == 0) {
-			throw new ForbiddenException("Does not have realm admin role");
-		}
-	}
+    @Path("schools")
+    public SchoolResource getSchoolResource() {
+        return new SchoolResource(session);
+    }
 
 }
